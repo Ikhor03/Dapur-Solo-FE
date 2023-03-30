@@ -1,14 +1,13 @@
 import React from "react";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CartItem from "../components/cartItem";
 
 const Cart = () => {
-    const carts = [''] //anggap ini state cart
-    // const cart = useSelector((state) => state.cart);
+    const carts = useSelector((state) => state.carts.cart)
 
-    // const total = carts.reduce((acc, item) => {
-    //     return acc + item.price * item.qty;
-    // }, 0);
+    const total = carts.reduce((acc, item) => {
+        return acc + item.price * item.qty;
+    }, 0);
 
     return (
         <div className="flex flex-col items-center py-8">
@@ -16,25 +15,43 @@ const Cart = () => {
             {carts.length === 0 ? (
                 <div className="mt-5">
                     <p>Your cart is empty.</p>
-                    <br/>
-                    <a href="home" className="font-medium text-indigo-600 hover:text-indigo-500">Order Sekarang &rarr;</a>
+                    <br />
+                    <a href="home" className="font-medium text-amber-600 hover:text-amber-500">Order Sekarang &rarr;</a>
                 </div>
             ) : (
-                <>
-                    {/* <div className="w-full grid grid-cols-4 gap-4 mb-8 justify-items-center">
-                        <div className="font-bold">Product</div>
-                        <div className="font-bold">Price</div>
-                        <div className="font-bold">Quantity</div>
-                    </div> */}
-                    <CartItem />
-                    {/* <div className="text-right font-bold text-xl mt-4">
-                        Total: ${total}
+                <div className="flex border-t md:w-full max-w-xl h-full flex-col bg-white shadow-xl">
+                    {carts.map((item) => (
+                        <CartItem key={item.id} item={item} />
+                    ))}
+                        {/* <CartItem /> */}
+                    <div className="border-t border-gray-200 py-6 px-4 sm:px-6 bg-white">
+                        <div className="flex justify-between text-base font-medium text-gray-900">
+                            <p>Subtotal</p>
+                            <p>Rp. {total}</p>
+                        </div>
+                        <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                        <div className="mt-6">
+                            <a
+                                href="/"
+                                className="flex items-center justify-center rounded-md border border-transparent bg-amber-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-700"
+                            >
+                                Checkout
+                            </a>
+                        </div>
+                        <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+                            <p className="mr-2">or</p>
+                            <a
+                                href="home"
+                                className="font-medium text-amber-600 hover:text-amber-500"
+                            >
+                                Continue Shopping
+                                <span aria-hidden="true"> &rarr;</span>
+                            </a>
+                        </div>
                     </div>
-                    <button className="bg-amber-500 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded mt-4">
-                        Checkout
-                    </button> */}
-                </>
-            )}
+                </div>
+            )
+            }
         </div>
     );
 };

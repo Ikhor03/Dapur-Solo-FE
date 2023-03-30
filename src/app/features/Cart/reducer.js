@@ -1,11 +1,17 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from "../constants";
+import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from "./constans";
 
 const initialState = {
     cart: [
         {
-            id: 2,
-            name: 'nasgor test',
-            price: 25000,
+            id: 1,
+            name: 'nasgor 1',
+            price: 27000,
+            qty: 3
+        },
+        {
+            id: 5,
+            name: 'Nasgor 2',
+            price: 15000,
             qty: 2
         }
     ],
@@ -40,7 +46,7 @@ export const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cart: state.cart.map((x) =>
-                    x.id === action.payload.id ? { ...x, quantity: action.payload.quantity } : x
+                    x.id === action.payload.id ? { ...x, qty: action.payload.quantity } : x
                 ),
             };
 

@@ -1,4 +1,6 @@
+import Footer from "../components/footer"
 import Navbar from "../components/navigation"
+import Pagination from "../components/pagination"
 
 const products = [
     {
@@ -8,7 +10,8 @@ const products = [
         imageSrc: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
         price: 'Rp 25.000',
-        color: 'Black',
+        category: 'Makanan',
+        tag: "Nasi"
     },
     {
         id: 2,
@@ -17,7 +20,8 @@ const products = [
         imageSrc: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
         price: 'Rp 25.000',
-        color: 'Black',
+        category: 'Makanan',
+        tag: "Nasi"
     },
     {
         id: 3,
@@ -26,7 +30,8 @@ const products = [
         imageSrc: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
         price: 'Rp 25.000',
-        color: 'Black',
+        category: 'Makanan',
+        tag: "Nasi"
     },
     {
         id: 4,
@@ -35,7 +40,8 @@ const products = [
         imageSrc: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
         price: 'Rp 25.000',
-        color: 'Black',
+        category: 'Makanan',
+        tag: "Nasi"
     },
     {
         id: 5,
@@ -44,7 +50,8 @@ const products = [
         imageSrc: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
         price: 'Rp 25.000',
-        color: 'Black',
+        category: 'Makanan',
+        tag: "Nasi"
     },
     {
         id: 6,
@@ -53,7 +60,8 @@ const products = [
         imageSrc: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
         price: 'Rp 25.000',
-        color: 'Black',
+        category: 'Makanan',
+        tag: "Nasi"
     },
 
     // More products...
@@ -84,12 +92,18 @@ export default function Home() {
                                     />
                                 </div>
                                 <div className="mt-0 justify-center" >
-                                    <h3 className="text-sm text-center text-gray-700">
-                                        <p>
-                                            <span aria-hidden="true" className="absolute inset-0" />
-                                            {product.name}
-                                        </p>
-                                    </h3>
+                                    <p className="text-sm font-medium text-center text-gray-900">
+                                        <span aria-hidden="true" className="absolute inset-0" />
+                                        {product.name}
+                                    </p>
+                                    <p className="text-sm text-center text-gray-700">
+                                        <span aria-hidden="true" className="absolute inset-0" />
+                                        {product.category}
+                                    </p>
+                                    <p className="text-sm text-center text-gray-700">
+                                        <span aria-hidden="true" className="absolute inset-0" />
+                                        {product.tag}
+                                    </p>
                                     <p className="text-sm font-medium text-center text-gray-900">{product.price}</p>
                                     <h2 className="text-center pt-2 cursor-pointer" onClick={addToCart}>Add to cart</h2>
                                 </div>
@@ -97,6 +111,8 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
+                <Pagination />
+                <Footer />
             </div>
         </>
     )
