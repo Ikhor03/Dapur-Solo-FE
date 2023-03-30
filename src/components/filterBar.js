@@ -110,27 +110,35 @@ const FilterBar = () => {
                                             >
                                                 <li className="flow-root">
                                                     <a href='{item.href}' className="-m-2 block p-2 text-gray-500">
-                                                        Category
+                                                        Makanan
+                                                    </a>
+                                                </li>
+                                                <li className="flow-root">
+                                                    <a href='{item.href}' className="-m-2 block p-2 text-gray-500">
+                                                        Minuman
+                                                    </a>
+                                                </li>
+                                                <li className="flow-root">
+                                                    <a href='{item.href}' className="-m-2 block p-2 text-gray-500">
+                                                        LauncBhox
                                                     </a>
                                                 </li>
                                             </ul>
                                         </div>
                                         {/* Tags */}
                                         <div className='border-t'>
-                                            <p id={`category.id-section.id-heading-mobile`} className="font-medium text-lg text-gray-900">
-                                                Tags
-                                            </p>
+                                            <div className='flex'>
+                                                <p id={`category.id-section.id-heading-mobile`} className="font-medium text-lg text-gray-900 mr-3 mt-1">
+                                                    Tags
+                                                </p>
+                                                <button className='bg-amber-500 hover:bg-amber-600 h-6 rounded-xl text-center px-2 mt-2 text-sm font-medium'>Clear All</button>
+                                            </div>
                                             <ul
                                                 aria-labelledby={`{category.id}-{section.id}-heading-mobile`}
                                                 className="mt-6 flex flex-col space-y-6"
                                             >
-                                                <li>
-                                                    <div >
-                                                        <button className='bg-amber-500 hover:bg-amber-600 rounded-xl text-center p-2 text-sm'>Clear All</button>
-                                                    </div>
-                                                </li>
                                                 <li >
-                                                    <form className="grid grid-cols-2 text-lg accent-amber-400 ">
+                                                    <form className="grid grid-cols-2 text-lg accent-amber-500 ">
                                                         <div className=''>
                                                             <input type="checkbox" className='h-5 w-5 mr-2' id="tag id" name="tag id" value="Bike" />
                                                             <label for="tag id" > Nasi</label>
