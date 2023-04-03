@@ -3,9 +3,9 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import FilterBar from './filterBar'
 import { useDispatch } from 'react-redux'
-import {openBar} from '../app/features/filterBar/reducerFilter'
+import { openBar } from '../app/features/filterBar/filterBarSlice'
 
-export default function Navbar() {
+export default function Navbar({cartCount}) {
     const dispatch = useDispatch()
     const [search, setSearch] = useState(false)
 
@@ -64,7 +64,7 @@ export default function Navbar() {
                     </div>
                 </Dialog>
             </Transition>
-            
+
             <FilterBar />
 
             <header className="relative bg-white">
@@ -130,7 +130,9 @@ export default function Navbar() {
                                             className="h-7 w-7 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                             aria-hidden="true"
                                         />
-                                        <span className="ml-2 text-lg font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                                        <span className="ml-2 text-lg font-medium text-gray-700 group-hover:text-gray-800">
+                                            {cartCount}
+                                        </span>
                                         <span className="sr-only">items in cart, view bag</span>
                                     </a>
                                 </div>

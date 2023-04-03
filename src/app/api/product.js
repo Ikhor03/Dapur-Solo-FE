@@ -1,11 +1,11 @@
 import axios from "axios";
 
-const getProduct = async () => {
-    
+export const getProduct = async () => {
+    return await axios.get('http://localhost:3000/api/products');
 }
-const getCategory = async () => {
+export const getCategory = async () => {
 
 }
-const getTagByCategory = async () => {
+export const getTagByCategory = async () => {
 
 }

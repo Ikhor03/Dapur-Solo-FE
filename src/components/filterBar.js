@@ -1,19 +1,55 @@
 import { Dialog, Tab, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { close } from '../app/features/filterBar/reducerFilter'
+import { close, fetchCategories, fetchTags, selectCategories, selectTagsBar } from '../app/features/filterBar/filterBarSlice'
+import { addedCategory, addedTags, deletedAllTags, deleteTags, fetchProducts, selectTags } from '../app/features/Product/productsSlice'
 
 const FilterBar = () => {
     function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
     }
 
-    const openValue = useSelector(state => state.FilterBar.value)
+    const openValue = useSelector(state => state.filterBar.value)
+    const categories = useSelector(selectCategories)
+    const tags = useSelector(selectTagsBar)
+    const checkedTags = useSelector(selectTags)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchCategories())
+        dispatch(fetchTags())
+    }, [dispatch])
 
     const closeBar = () => {
         dispatch(close())
+    }
+
+    const filterProducts = (e) => {
+        let category = e.target.value
+        dispatch(close())
+        dispatch(addedCategory(category))
+        dispatch(fetchProducts({ skip: 0, limit: 8, category }))
+    }
+
+    const [toggleTag, setToggleTag] = useState({})
+    const handleChange = (e) => {
+        let tag = e.target.name
+        setToggleTag({ ...toggleTag, [tag]: e.target.checked })
+
+        if (e.target.checked && tag) {
+            dispatch(addedTags([...checkedTags, tag]))
+        } else {
+            dispatch(deleteTags(tag))
+        }
+        
+    }
+
+    useMemo(() => dispatch(fetchProducts({ skip: 0, limit: 8, category: '', tags: checkedTags })), [checkedTags, dispatch])
+
+    const handleClearTag = () => {
+        setToggleTag(false)
+        dispatch(deletedAllTags())
     }
 
     return (
@@ -41,7 +77,7 @@ const FilterBar = () => {
                         leaveFrom="translate-x-0"
                         leaveTo="-translate-x-full"
                     >
-                        <Dialog.Panel className="relative flex w-full max-w-xs lg:max-w-md flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+                        <Dialog.Panel className="relative flex w-full max-w-sm lg:max-w-md flex-col overflow-y-auto bg-white pb-12 shadow-xl">
                             <div className="flex px-4 pt-5 pb-2">
                                 <button
                                     type="button"
@@ -71,8 +107,8 @@ const FilterBar = () => {
                                 </div>
                                 <Tab.Panels as={Fragment}>
                                     <Tab.Panel className="space-y-10 px-4 pt-10 pb-8">
+                                        {/* HERO Menu */}
                                         <div className="grid grid-cols-2 gap-x-4">
-                                            {/* {category.featured.map((item) => ( */}
                                             <div className="group relative text-sm">
                                                 <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
                                                     <img src="https://media-cdn.tripadvisor.com/media/photo-s/0f/50/9f/c5/nasi-pecel-madiun-healthy.jpg" alt="nasi-pecel-madiun-healthy" className="object-cover object-center" />
@@ -97,41 +133,50 @@ const FilterBar = () => {
                                                     Pesan
                                                 </p>
                                             </div>
-                                            {/* ))} */}
+
                                         </div>
                                         {/* Categories */}
                                         <div>
-                                            <p id={`category.id-section.id-heading-mobile`} className="font-medium text-lg text-gray-900">
-                                                Categories
-                                            </p>
+                                            <div className=' flex justify-between'>
+                                                <p id={`category.id-section.id-heading-mobile`} className="font-medium text-lg text-gray-900">
+                                                    Categories
+                                                </p>
+                                                <button
+                                                    onClick={filterProducts}
+                                                    value=''
+                                                    className='bg-amber-500 hover:bg-amber-600 h-6 rounded-xl text-center px-2 mt-2 text-sm font-medium'>
+                                                    Show All
+                                                </button>
+                                            </div>
                                             <ul
                                                 aria-labelledby={`{category.id}-{section.id}-heading-mobile`}
                                                 className="mt-6 flex flex-col space-y-6"
                                             >
-                                                <li className="flow-root">
-                                                    <a href='{item.href}' className="-m-2 block p-2 text-gray-500">
-                                                        Makanan
-                                                    </a>
-                                                </li>
-                                                <li className="flow-root">
-                                                    <a href='{item.href}' className="-m-2 block p-2 text-gray-500">
-                                                        Minuman
-                                                    </a>
-                                                </li>
-                                                <li className="flow-root">
-                                                    <a href='{item.href}' className="-m-2 block p-2 text-gray-500">
-                                                        LauncBhox
-                                                    </a>
-                                                </li>
+                                                {categories.map((category) => {
+                                                    return (
+                                                        <li className="flow-root" key={category._id}>
+                                                            <button
+                                                                onClick={filterProducts}
+                                                                value={category.name}
+                                                                className="-m-2 block p-2 text-gray-500">
+                                                                {category.name}
+                                                            </button>
+                                                        </li>
+                                                    )
+                                                })}
                                             </ul>
                                         </div>
                                         {/* Tags */}
                                         <div className='border-t'>
-                                            <div className='flex'>
+                                            <div className='flex justify-between'>
                                                 <p id={`category.id-section.id-heading-mobile`} className="font-medium text-lg text-gray-900 mr-3 mt-1">
                                                     Tags
                                                 </p>
-                                                <button className='bg-amber-500 hover:bg-amber-600 h-6 rounded-xl text-center px-2 mt-2 text-sm font-medium'>Clear All</button>
+                                                <button
+                                                    onClick={handleClearTag}
+                                                    className='bg-amber-500 hover:bg-amber-600 h-6 rounded-xl text-center px-2 mt-2 text-sm font-medium'>
+                                                    Clear All
+                                                </button>
                                             </div>
                                             <ul
                                                 aria-labelledby={`{category.id}-{section.id}-heading-mobile`}
@@ -139,18 +184,21 @@ const FilterBar = () => {
                                             >
                                                 <li >
                                                     <form className="grid grid-cols-2 text-lg accent-amber-500 ">
-                                                        <div className=''>
-                                                            <input type="checkbox" className='h-5 w-5 mr-2' id="tag id" name="tag id" value="Bike" />
-                                                            <label for="tag id" > Nasi</label>
-                                                        </div>
-                                                        <div className=''>
-                                                            <input type="checkbox" className='h-5 w-5 mr-2' id="tag id" name="tag id" value="Bike" />
-                                                            <label for="tag id"> Camilan</label>
-                                                        </div>
-                                                        <div className=' mt-3'>
-                                                            <input type="checkbox" className='h-5 w-5 mr-2' id="tag id" name="tag id" value="Bike" />
-                                                            <label for="tag id"> tumpeng</label>
-                                                        </div>
+                                                        {tags.map((tag) => {
+                                                            return (
+                                                                <div key={tag._id}>
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        onChange={handleChange}
+                                                                        checked={toggleTag[tag.name] || false}
+                                                                        className='h-5 w-5 mr-2'
+                                                                        id={tag._id}
+                                                                        name={tag.name}
+                                                                    />
+                                                                    <label htmlFor={tag._id} > {tag.name}</label>
+                                                                </div>
+                                                            )
+                                                        })}
                                                     </form>
                                                 </li>
                                             </ul>
