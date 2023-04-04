@@ -29,7 +29,7 @@ const FilterBar = () => {
         let category = e.target.value
         dispatch(close())
         dispatch(addedCategory(category))
-        dispatch(fetchProducts({ skip: 0, limit: 8, category }))
+        dispatch(fetchProducts({ skip: 0, limit: 8, category, tags : checkedTags }))
     }
 
     const [toggleTag, setToggleTag] = useState({})
@@ -191,7 +191,7 @@ const FilterBar = () => {
                                                                         type="checkbox"
                                                                         onChange={handleChange}
                                                                         checked={toggleTag[tag.name] || false}
-                                                                        className='h-5 w-5 mr-2'
+                                                                        className='h-5 w-5 mr-2 focus:ring-amber-600 text-amber-600'
                                                                         id={tag._id}
                                                                         name={tag.name}
                                                                     />

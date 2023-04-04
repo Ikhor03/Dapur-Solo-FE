@@ -4,7 +4,7 @@ import { fetchProducts, selectAllProducts, selectCategory, selectLimit, selectSk
 import Card from "./card"
 import Pagination from "./pagination"
 
-export const CardList = ({cartCount, onCartChange}) => {
+export const CardList = () => {
 
     const dispatch = useDispatch()
     const allProducts = useSelector(selectAllProducts)
@@ -45,8 +45,6 @@ export const CardList = ({cartCount, onCartChange}) => {
                                     key={product._id}
                                     category={category.name}
                                     tags={tags}
-                                    cartCount={cartCount}
-                                    onCartChange={onCartChange}
                                 />
                             )
                         })

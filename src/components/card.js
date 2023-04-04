@@ -1,72 +1,14 @@
-// const products = [ //FAKE DATA
-//     {
-//         id: 1,
-//         name: 'Nasi Goreng Timbel',
-//         href: '#',
-//         image_url: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
-//         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
-//         price: 'Rp 25.000',
-//         category: 'Makanan',
-//         tags: "Nasi"
-//     },
-//     {
-//         id: 2,
-//         name: 'Nasi Goreng Timbel',
-//         href: '#',
-//         image_url: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
-//         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
-//         price: 'Rp 25.000',
-//         category: 'Makanan',
-//         tags: "Nasi"
-//     },
-//     {
-//         id: 3,
-//         name: 'Nasi Goreng Timbel',
-//         href: '#',
-//         image_url: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
-//         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
-//         price: 'Rp 25.000',
-//         category: 'Makanan',
-//         tags: "Nasi"
-//     },
-//     {
-//         id: 4,
-//         name: 'Nasi Goreng Timbel',
-//         href: '#',
-//         image_url: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
-//         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
-//         price: 'Rp 25.000',
-//         category: 'Makanan',
-//         tags: "Nasi"
-//     },
-//     {
-//         id: 5,
-//         name: 'Nasi Goreng Timbel',
-//         href: '#',
-//         image_url: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
-//         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
-//         price: 'Rp 25.000',
-//         category: 'Makanan',
-//         tags: "Nasi"
-//     },
-//     {
-//         id: 6,
-//         name: 'Nasi Goreng Timbel',
-//         href: '#',
-//         image_url: 'https://dapursolo.com/library/2021/05/nasi-goreng--1621832324.png',
-//         imageAlt: "Front of men's Nasi Goreng Timbel in black.",
-//         price: 'Rp 25.000',
-//         category: 'Makanan',
-//         tags: "Nasi"
-//     },
+import { useDispatch, useSelector } from "react-redux"
+import {addToCart} from "../app/features/Cart/action"
 
-//     // More products...
-// ]
-export default function Card({ product, category, tags, cartCount, onCartChange }) {
+export default function Card({ product, category, tags }) {
+    const dispatch = useDispatch()
+    const carts = useSelector((state) => state.carts.cart)
 
-    const addToCart = () => {
+    const handleAddCart = () => {
         alert(`Telah menambahkan ${product.name} ke dalam keranjang`)
-        onCartChange(cartCount + 1)
+        // onCartChange(cartCount + 1)
+        dispatch(addToCart(product))
     }
 
     return (
@@ -97,7 +39,7 @@ export default function Card({ product, category, tags, cartCount, onCartChange 
                 <div className="flex justify-center">
                     <button
                         className=" mt-5 px-2 py-1 cursor-pointer border border-amber-700 bg-amber-500 hover:bg-amber-600 rounded-full "
-                        onClick={addToCart}>
+                        onClick={handleAddCart}>
                         Add to cart
                     </button>
 

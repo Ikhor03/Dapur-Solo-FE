@@ -2,12 +2,14 @@ import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import FilterBar from './filterBar'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { openBar } from '../app/features/filterBar/filterBarSlice'
 
-export default function Navbar({cartCount}) {
+export default function Navbar() {
     const dispatch = useDispatch()
     const [search, setSearch] = useState(false)
+    const carts = useSelector((state) => state.carts.cart)
+    const countCarts = carts.length
 
     function closeSearchBar() {
         setSearch(false)
@@ -115,7 +117,7 @@ export default function Navbar({cartCount}) {
 
                             <div className="ml-auto flex items-center ">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href="/"
+                                    <a href="/login"
                                         className="text-lg font-medium text-amber-600 hover:text-amber-700"
                                     >
                                         Account
@@ -131,7 +133,7 @@ export default function Navbar({cartCount}) {
                                             aria-hidden="true"
                                         />
                                         <span className="ml-2 text-lg font-medium text-gray-700 group-hover:text-gray-800">
-                                            {cartCount}
+                                            {countCarts}
                                         </span>
                                         <span className="sr-only">items in cart, view bag</span>
                                     </a>

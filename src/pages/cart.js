@@ -4,6 +4,7 @@ import CartItem from "../components/cartItem";
 
 const Cart = () => {
     const carts = useSelector((state) => state.carts.cart)
+    // console.log(carts);
 
     const total = carts.reduce((acc, item) => {
         return acc + item.price * item.qty;
@@ -19,7 +20,7 @@ const Cart = () => {
                     <a href="home" className="font-medium text-amber-600 hover:text-amber-500">Order Sekarang &rarr;</a>
                 </div>
             ) : (
-                <div className="flex border-t md:w-full max-w-xl h-full flex-col bg-white shadow-xl">
+                <div className="flex border-t w-3/4 md:w-full max-w-xl h-full flex-col bg-white shadow-xl">
                     {carts.map((item) => (
                         <CartItem key={item.id} item={item} />
                     ))}

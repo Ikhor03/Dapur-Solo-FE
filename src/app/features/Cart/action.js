@@ -4,7 +4,7 @@ export const addToCart = (product) => (dispatch, getState) => {
     dispatch({
         type: ADD_TO_CART,
         payload: {
-            id: product.id,
+            id: product._id,
             name: product.name,
             price: product.price,
             quantity: 1,

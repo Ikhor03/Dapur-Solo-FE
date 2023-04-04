@@ -45,13 +45,13 @@ const CartItem = ({ item }) => {
                                         <p className="mt-1 text-sm text-gray-500">Rp{item.price}</p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
-                                        <div className="flex">
+                                        <div className="flex items-center">
                                             <p className="text-gray-500">
-                                                Qty
+                                                Qty:
                                             </p>
                                             {/* <button > - </button> */}
                                             {/* <span className="ml-2 w-10 border text-center">{item.qty}</span> */}
-                                            <input className="ml-2 w-10 border text-center" type='number' min='1' value={item.qty} onChange={handleQuantityChange} />
+                                            <input className="ml-2 w-20 text-center" type='number' min='1' value={item.qty} onChange={handleQuantityChange} />
                                             {/* <button onClick={handleQuantityChange}> + </button> */}
                                         </div>
 

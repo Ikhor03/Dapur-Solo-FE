@@ -1,27 +1,14 @@
 import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from "./constans";
 
 const initialState = {
-    cart: [
-        {
-            id: 1,
-            name: 'nasgor 1',
-            price: 27000,
-            qty: 3
-        },
-        {
-            id: 5,
-            name: 'Nasgor 2',
-            price: 15000,
-            qty: 2
-        }
-    ],
+    cart: [],
 };
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
             const item = action.payload;
-            const existingItem = state.cart.find((x) => x.id === item.id);
+            const existingItem = state.cart.find((x) => x.id === item._id);
             if (existingItem) {
                 return {
                     ...state,
