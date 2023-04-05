@@ -1,15 +1,28 @@
 import { useDispatch, useSelector } from "react-redux"
-import {addToCart} from "../app/features/Cart/action"
+import { addToCart, setCart } from "../app/features/Cart/action"
+import { useEffect } from "react"
 
 export default function Card({ product, category, tags }) {
     const dispatch = useDispatch()
     const carts = useSelector((state) => state.carts.cart)
-
+    
     const handleAddCart = () => {
         alert(`Telah menambahkan ${product.name} ke dalam keranjang`)
         // onCartChange(cartCount + 1)
         dispatch(addToCart(product))
     }
+    
+    let dataCartLocal = JSON.parse(localStorage.getItem('ADD_TO_CART'))
+    useEffect(() => {
+        if (dataCartLocal) {
+            dispatch(setCart(dataCartLocal))
+        }
+    }, [dispatch])
+    
+    useEffect(() => {
+        localStorage.setItem('ADD_TO_CART', JSON.stringify(carts))
+    }, [carts])
+    
 
     return (
         <div >

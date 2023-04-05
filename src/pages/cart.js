@@ -1,13 +1,25 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/cartItem";
+import { setCart } from "../app/features/Cart/action";
 
 const Cart = () => {
     const carts = useSelector((state) => state.carts.cart)
-    // console.log(carts);
+    const dispatch = useDispatch()
+
+    let dataCartLocal = JSON.parse(localStorage.getItem('ADD_TO_CART'))
+    useEffect(() => {
+        if (dataCartLocal) {
+            dispatch(setCart(dataCartLocal))
+        }
+    }, [])
+
+    useEffect(() => {
+        localStorage.setItem('ADD_TO_CART', JSON.stringify(carts))
+    }, [carts])
 
     const total = carts.reduce((acc, item) => {
-        return acc + item.price * item.qty;
+        return acc + item.price * item.quantity;
     }, 0);
 
     return (

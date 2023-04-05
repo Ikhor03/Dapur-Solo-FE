@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from "./constans";
+import { ADD_TO_CART, REMOVE_FROM_CART, SET_CART, UPDATE_QUANTITY } from "./constans";
 
 const initialState = {
     cart: [],
@@ -23,6 +23,12 @@ export const cartReducer = (state = initialState, action) => {
                 };
             }
 
+        case SET_CART:
+            return {
+                ...state,
+                cart: action.payload
+            }
+
         case REMOVE_FROM_CART:
             return {
                 ...state,
@@ -33,7 +39,7 @@ export const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 cart: state.cart.map((x) =>
-                    x.id === action.payload.id ? { ...x, qty: action.payload.quantity } : x
+                    x.id === action.payload.id ? { ...x, quantity: action.payload.quantity } : x
                 ),
             };
 
