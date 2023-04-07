@@ -11,6 +11,8 @@ export default function Navbar() {
     const carts = useSelector((state) => state.carts.cart)
     const countCarts = carts.length
 
+    const {token} = JSON.parse(localStorage.getItem('auth'))
+
     function closeSearchBar() {
         setSearch(false)
     }
@@ -117,7 +119,7 @@ export default function Navbar() {
 
                             <div className="ml-auto flex items-center ">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href="/login"
+                                    <a href={token === null? '/login' : '/account'}
                                         className="text-lg font-medium text-amber-600 hover:text-amber-700"
                                     >
                                         Account

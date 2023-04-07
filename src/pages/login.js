@@ -1,30 +1,47 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, selectAuth } from '../app/features/Auth/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const [errors, setErrors] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const auth = useSelector(selectAuth)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            let {data} = await axios.post('http://localhost:3000/auth/login', {
+                email,
+                password
+            }, {
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+            alert('Login successfully!')
+            if(data.error) {
+                setErrors(data.response)
+            } else{
+                const {user, token } = data
+                dispatch(login({user, token}))
+                setErrors([])
+                navigate(-1)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        localStorage.setItem('auth', JSON.stringify(auth))
+    }, [auth])
+
     return (
         <>
-            {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-50">
-        <body class="h-full">
-        ```
-      */}
             <div className="flex min-h-full items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
                 <div className="w-full max-w-md space-y-8">
                     <div>
@@ -43,7 +60,10 @@ export default function Login() {
                             </a>
                         </p>
                     </div>
-                    <form className="mt-8 space-y-6" action="#" method="POST">
+                    <div className='bg-red-200 rounded-lg'>
+                        <p className='text-center'>{errors}</p>
+                    </div>
+                    <form className="mt-8 space-y-6" onSubmit={ handleSubmit }>
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="-space-y-px rounded-md shadow-sm">
                             <div>
@@ -58,6 +78,7 @@ export default function Login() {
                                     required
                                     className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                                     placeholder="Email address"
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div>
@@ -72,6 +93,7 @@ export default function Login() {
                                     required
                                     className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-amber-600 sm:text-sm sm:leading-6"
                                     placeholder="Password"
+                                    onChange={(e) => setPassword(e.target.value)}
                                 />
                             </div>
                         </div>

@@ -6,8 +6,9 @@ import { setCart } from "../app/features/Cart/action";
 const Cart = () => {
     const carts = useSelector((state) => state.carts.cart)
     const dispatch = useDispatch()
+    
+    let dataCartLocal = JSON.parse(localStorage.getItem('cart'))
 
-    let dataCartLocal = JSON.parse(localStorage.getItem('ADD_TO_CART'))
     useEffect(() => {
         if (dataCartLocal) {
             dispatch(setCart(dataCartLocal))
@@ -15,7 +16,7 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('ADD_TO_CART', JSON.stringify(carts))
+        localStorage.setItem('cart', JSON.stringify(carts))
     }, [carts])
 
     const total = carts.reduce((acc, item) => {
@@ -34,19 +35,18 @@ const Cart = () => {
             ) : (
                 <div className="flex border-t w-3/4 md:w-full max-w-xl h-full flex-col bg-white shadow-xl">
                     {carts.map((item) => (
-                        <CartItem key={item.id} item={item} />
+                        <CartItem key={item._id} item={item} />
                     ))}
-                        {/* <CartItem /> */}
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6 bg-white">
                         <div className="flex justify-between text-base font-medium text-gray-900">
                             <p>Subtotal</p>
                             <p>Rp. {total}</p>
                         </div>
                         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
-                        <div className="mt-6">
+                            <div className="mt-6 flex justify-center">
                             <a
-                                href="/"
-                                className="flex items-center justify-center rounded-md border border-transparent bg-amber-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-700"
+                                href='checkout'
+                                className=" rounded-md border border-transparent bg-amber-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-700"
                             >
                                 Checkout
                             </a>

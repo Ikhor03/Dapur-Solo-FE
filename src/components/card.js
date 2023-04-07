@@ -1,26 +1,41 @@
 import { useDispatch, useSelector } from "react-redux"
-import { addToCart, setCart } from "../app/features/Cart/action"
+import { addToCart } from "../app/features/Cart/action"
 import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 export default function Card({ product, category, tags }) {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const carts = useSelector((state) => state.carts.cart)
+    const {token} = JSON.parse(localStorage.getItem('auth'))
     
     const handleAddCart = () => {
-        alert(`Telah menambahkan ${product.name} ke dalam keranjang`)
-        // onCartChange(cartCount + 1)
-        dispatch(addToCart(product))
+        if (JSON.parse(localStorage.getItem('auth'))){
+            alert(`Telah menambahkan ${product.name} ke dalam keranjang`)
+            dispatch(addToCart(product))
+        } else {
+            navigate('/login')
+        }
     }
     
-    let dataCartLocal = JSON.parse(localStorage.getItem('ADD_TO_CART'))
     useEffect(() => {
-        if (dataCartLocal) {
-            dispatch(setCart(dataCartLocal))
+        localStorage.setItem('cart', JSON.stringify(carts))
+
+        async function saveCart() {
+            try {
+                let { data } = await axios.put('http://localhost:3000/api/cart', { items: carts }, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+                if (data.error) {
+                    console.log(data.message)
+                }
+            } catch (error) {
+                console.error(error.response.data)
+            }
         }
-    }, [dispatch])
-    
-    useEffect(() => {
-        localStorage.setItem('ADD_TO_CART', JSON.stringify(carts))
+
+        saveCart()
     }, [carts])
     
 

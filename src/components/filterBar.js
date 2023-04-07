@@ -16,6 +16,8 @@ const FilterBar = () => {
     const checkedTags = useSelector(selectTags)
     const dispatch = useDispatch()
 
+    const token = JSON.parse(localStorage.getItem('auth'))
+
     useEffect(() => {
         dispatch(fetchCategories())
         dispatch(fetchTags())
@@ -29,7 +31,7 @@ const FilterBar = () => {
         let category = e.target.value
         dispatch(close())
         dispatch(addedCategory(category))
-        dispatch(fetchProducts({ skip: 0, limit: 8, category, tags : checkedTags }))
+        dispatch(fetchProducts({ skip: 0, limit: 8, category, tags: checkedTags }))
     }
 
     const [toggleTag, setToggleTag] = useState({})
@@ -42,7 +44,7 @@ const FilterBar = () => {
         } else {
             dispatch(deleteTags(tag))
         }
-        
+
     }
 
     useMemo(() => dispatch(fetchProducts({ skip: 0, limit: 8, category: '', tags: checkedTags })), [checkedTags, dispatch])
@@ -207,18 +209,28 @@ const FilterBar = () => {
                                 </Tab.Panels>
                             </Tab.Group>
 
-                            <div className="space-y-6 border-t border-gray-200 py-6 px-4">
-                                <div className="flow-root">
-                                    <a href="/" className="-m-2 block p-2 font-medium text-gray-900">
-                                        Sign in
-                                    </a>
+                            {token === null ?
+                                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
+                                    <div className="flow-root">
+                                        <a href="/login" className="-m-2 block p-2 font-medium text-gray-900">
+                                            Sign In
+                                        </a>
+                                    </div>
+                                    <div className="flow-root">
+                                        <a href="/register" className="-m-2 block p-2 font-medium text-gray-900">
+                                            Create account
+                                        </a>
+                                    </div>
                                 </div>
-                                <div className="flow-root">
-                                    <a href="/" className="-m-2 block p-2 font-medium text-gray-900">
-                                        Create account
-                                    </a>
+                                : 
+                                <div className="space-y-6 border-t border-gray-200 py-6 px-4">
+                                    <div className="flow-root">
+                                        <a href="/account" className="-m-2 block p-2 font-medium text-gray-900">
+                                            Account
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
+                                }
                         </Dialog.Panel>
                     </Transition.Child>
                 </div>

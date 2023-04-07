@@ -3,13 +3,7 @@ import { ADD_TO_CART, REMOVE_FROM_CART, SET_CART, UPDATE_QUANTITY } from "./cons
 export const addToCart = (product) => (dispatch, getState) => {
     dispatch({
         type: ADD_TO_CART,
-        payload: {
-            id: product._id,
-            name: product.name,
-            price: product.price,
-            image: product.image_url,
-            quantity: 1,
-        },
+        payload: product,
     });
 };
 

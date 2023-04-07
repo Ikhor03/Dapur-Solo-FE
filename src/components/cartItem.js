@@ -8,12 +8,12 @@ const CartItem = ({ item }) => {
 
     const handleQuantityChange = (e) => {
         const quantity = parseInt(e.target.value);
-        dispatch(updateQuantity(item.id, quantity));
+        dispatch(updateQuantity(item._id, quantity));
     };
 
     const handleRemove = () => {
         alert('Yakin gajadi pesan?')
-        dispatch(removeFromCart(item.id));
+        dispatch(removeFromCart(item._id));
     };
 
 
@@ -25,10 +25,10 @@ const CartItem = ({ item }) => {
                 <div className="mt-8">
                     <div className="flow-root">
                         <ul className="-my-6 divide-y divide-gray-200">
-                            <li key={item.id} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                            <li key={item._id} className="flex py-6">
+                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border-gray-200">
                                     <img
-                                        src={item.image}
+                                        src={item.image_url}
                                         alt={item.name}
                                         className="h-full w-full object-cover object-center"
                                     />
