@@ -10,6 +10,7 @@ export default function CheckboxAddress({onChangeAddress}) {
     const [selected, setSelected] = useState('')
 
     const handleChecked = (value) => {
+        setSelected(value)
         let filtered = dataList.filter(data => data._id === value)
         onChangeAddress(filtered[0])
     }

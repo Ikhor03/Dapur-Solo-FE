@@ -1,11 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/cartItem";
 import CheckboxAddress from "../components/checkboxAddress";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setCart } from "../app/features/Cart/action";
 
 export default function Checkout() {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const carts = useSelector((state) => state.carts.cart)
+    const [order_id, setOrder_id] = useState()
     const [delivery_address, setDelivery_address] = useState({})
     const { token } = JSON.parse(localStorage.getItem('auth'))
     let delivery_fee = 15000
@@ -19,24 +24,37 @@ export default function Checkout() {
         setDelivery_address(address)
     }
 
-    const handleChekout = () => {
-        alert('Create Order ma brothaa')
-        // console.log(delivery_address);
-        axios.post(`http://localhost:3000/api/orders`,{
+    const handleChekout = async () => {
+
+        await axios.post(`http://localhost:3000/api/orders`,{
                 delivery_fee,
                 delivery_address
             },
             { headers: { authorization: `Bearer ${token}` } })
-            .then((res) => console.log(res.data))
+            .then((res) => {
+                setOrder_id(res.data.data._id)
+                alert(res.data.message)
+            })
             .catch(err => console.error(err.response.data))
-    }
+            .finally(() => {
+                dispatch(setCart([]))
+                localStorage.setItem('cart', JSON.stringify([]))
+            })
+                        
+        }
+        
+        useEffect(() => {
+            if (order_id) {
+                navigate(`/invoice/${order_id}`)
+            }
+        }, [order_id])
 
     return (
         <div className="bg-gradient-to-tl from-amber-100 to-gray-100">
 
 
             <div className="grid lg:grid-cols-3 gap-2">
-                {/* FORM ADDRESS */}
+                {/* ADDRESS */}
                 <div className="p-4 col-span-2">
 
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">

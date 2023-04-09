@@ -11,7 +11,7 @@ export default function Navbar() {
     const carts = useSelector((state) => state.carts.cart)
     const countCarts = carts.length
 
-    const {token} = JSON.parse(localStorage.getItem('auth'))
+    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ""
 
     function closeSearchBar() {
         setSearch(false)

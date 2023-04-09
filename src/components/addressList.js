@@ -1,4 +1,3 @@
-import { TrashIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -19,6 +18,8 @@ export default function AddressList() {
                 } else {
                     alert(`alamat "${data.nama}" berhasil dihapus`)
                 }
+
+                window.location.reload()
             } catch (error) {
                 console.log(error)
             }
@@ -35,7 +36,7 @@ export default function AddressList() {
             setDataList(data.data)
         }
 
-        getAddresses()        
+        getAddresses()
     }, [])
 
     return (
@@ -102,7 +103,7 @@ export default function AddressList() {
                                                 >
                                                     delete
                                                 </button>
-                                                    {/* <TrashIcon value={address._id} className="h-5 w-5 hover:text-white" /> */}
+                                                {/* <TrashIcon value={address._id} className="h-5 w-5 hover:text-white" /> */}
                                             </td>
                                         </tr>
                                         <tr>

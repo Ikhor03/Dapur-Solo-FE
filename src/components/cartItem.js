@@ -12,8 +12,8 @@ const CartItem = ({ item }) => {
     };
 
     const handleRemove = () => {
-        alert('Yakin gajadi pesan?')
-        dispatch(removeFromCart(item._id));
+        alert('cart removed')
+        dispatch(removeFromCart(item.product._id));
     };
 
 

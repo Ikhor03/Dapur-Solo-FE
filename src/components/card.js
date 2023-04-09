@@ -8,12 +8,24 @@ export default function Card({ product, category, tags }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const carts = useSelector((state) => state.carts.cart)
-    const {token} = JSON.parse(localStorage.getItem('auth'))
+    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ""
+
+
+    async function saveCart() {
+        try {
+            let { data } = await axios.put('http://localhost:3000/api/cart', { items: carts }, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            alert(data.message)
+        } catch (error) {
+            console.error(error.response.data)
+        }
+    }
     
     const handleAddCart = () => {
         if (JSON.parse(localStorage.getItem('auth'))){
-            alert(`Telah menambahkan ${product.name} ke dalam keranjang`)
             dispatch(addToCart(product))
+            saveCart()
         } else {
             navigate('/login')
         }
@@ -21,21 +33,6 @@ export default function Card({ product, category, tags }) {
     
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(carts))
-
-        async function saveCart() {
-            try {
-                let { data } = await axios.put('http://localhost:3000/api/cart', { items: carts }, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
-                if (data.error) {
-                    console.log(data.message)
-                }
-            } catch (error) {
-                console.error(error.response.data)
-            }
-        }
-
-        saveCart()
     }, [carts])
     
 
