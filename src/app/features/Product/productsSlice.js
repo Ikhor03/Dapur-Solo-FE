@@ -13,7 +13,8 @@ const initialState = {
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts',
     async ({ skip, limit, category, tags }) => {
-        const response = await axios(`http://localhost:3000/api/products?skip=${skip}&limit=${limit}&category=${category}&tags=${tags}`)
+        let tagsString = tags.join('&tags=')
+        const response = await axios(`http://localhost:3000/api/products?skip=${skip}&limit=${limit}&category=${category}&tags=${tagsString}`)
         return response.data
     })
 
