@@ -1,7 +1,21 @@
+import axios from "axios";
 import DisclosureAcc from "../components/disclosureAcc";
+import { useNavigate } from "react-router-dom";
 
-export default function Account () {
-    const { user } = JSON.parse(localStorage.getItem('auth')) 
+export default function Account() {
+    const { user, token } = JSON.parse(localStorage.getItem('auth'))
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        async function logout() {
+            let {data} = await axios.post(`http://localhost:3000/auth/logout`, null, {headers:{Authorization: `Bearer ${token}`}})
+            alert(data.message)
+            localStorage.removeItem('auth')
+            navigate('/')
+        }
+
+        logout()
+    }
     return (
         <div className="w-11/12 mx-auto mt-4">
             <div className="bg-white overflow-hidden shadow-lg">
@@ -16,12 +30,15 @@ export default function Account () {
                 <div className="mt-10 flex justify-between pb-4">
                     <a href="/home" className="w-full px-4 py-2 pl-8">
                         <p className="text-sm font-medium text-amber-800 hover:text-amber-900 leading-none">
-                         &larr; Back to home 
+                            &larr; Back to home
                         </p>
                     </a>
                     <span href="#" className="w-full right-0 py-2 pr-10 ">
-                        <p className="text-sm text-right font-medium text-amber-800 hover:text-amber-900 cursor-pointer leading-none">
-                         Logout
+                        <p
+                            onClick={handleLogout}
+                            className="text-sm text-right font-medium text-amber-800 hover:text-amber-900 cursor-pointer leading-none"
+                        >
+                            Logout
                         </p>
                     </span>
                 </div>

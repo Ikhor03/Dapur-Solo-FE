@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 export default function OrderList() {
     const navigate = useNavigate()
     const [orders, setOrders] = useState()
-    const [total, setTotal] = useState(0)
     let { token } = JSON.parse(localStorage.getItem('auth'))
 
     useEffect(() => {
@@ -17,21 +16,11 @@ export default function OrderList() {
         getOrders()
     }, [])
 
-    // useEffect(() => {
-    //     if (order !== '') {
-    //         async function getInvoice() {
-    //             let { data } = await axios(`http://localhost:3000/api/invoice/${order}`, { headers: { Authorization: `Bearer ${token}` } })
-    //             setInvoice(data)
-    //         }
-
-    //         getInvoice()
-    //     }
-    // }, [order])
-
     return (
         <>{
-            !orders ?
+            !orders || orders.length === 0 ?
                 <div>
+                    <p className="text-center font-semibold mb-2">ANDA BELUM MEMILIKI PEMESANAN</p>
                     <a href="home" className="grid text-center font-bold text-amber-600">Pesan sekarang &rarr;</a>
                 </div>
                 :
