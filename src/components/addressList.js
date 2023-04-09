@@ -21,7 +21,7 @@ export default function AddressList() {
 
                 window.location.reload()
             } catch (error) {
-                console.log(error)
+                console.error(error)
             }
         }
 
