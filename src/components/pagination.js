@@ -18,7 +18,7 @@ export default function Pagination({ products, currentPage, onPageChange, skip, 
     const paginationRange = useMemo(() => {
         let totalRange = range(1, totalPageCount)
 
-        if (totalPageCount <= 5) {
+        if (totalPageCount <= 10) {
             return totalRange
         }
 
@@ -87,7 +87,6 @@ export default function Pagination({ products, currentPage, onPageChange, skip, 
                             <span className="sr-only">Previous</span>
                             <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
                         </button>
-                        {/* Current: "z-10 bg-amber-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
                         {paginationRange.map(pageNumber => (
                             <button
                                 // onClick={onPageChange}
