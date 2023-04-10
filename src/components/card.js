@@ -10,7 +10,6 @@ export default function Card({ product, category, tags }) {
     const carts = useSelector((state) => state.carts.cart)
     const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ""
 
-
     async function saveCart() {
         try {
             let { data } = await axios.put('http://localhost:3000/api/cart', { items: carts }, {
@@ -23,7 +22,7 @@ export default function Card({ product, category, tags }) {
     }
     
     const handleAddCart = () => {
-        if (JSON.parse(localStorage.getItem('auth'))){
+        if (token){
             dispatch(addToCart(product))
             saveCart()
         } else {

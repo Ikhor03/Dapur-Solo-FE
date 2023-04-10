@@ -33,12 +33,13 @@ export default function Checkout() {
             { headers: { authorization: `Bearer ${token}` } })
             .then((res) => {
                 setOrder_id(res.data.data._id)
+                dispatch(setCart([]))
+                localStorage.setItem('cart', JSON.stringify([]))
                 alert(res.data.message)
             })
             .catch(err => console.error(err.response.data))
             .finally(() => {
-                dispatch(setCart([]))
-                localStorage.setItem('cart', JSON.stringify([]))
+                
             })
                         
         }

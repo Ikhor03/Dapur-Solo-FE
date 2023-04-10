@@ -1,12 +1,10 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addedSkip, fetchProducts, selectCategory, subtractedSkip } from '../app/features/Product/productsSlice'
+import { useDispatch } from 'react-redux'
+import { addedSkip, subtractedSkip } from '../app/features/Product/productsSlice'
 
 export default function Pagination({ products, currentPage, onPageChange, skip, limit, tags }) {
     const dispatch = useDispatch()
-    const category = useSelector(selectCategory)
-
     let totalPageCount = Math.ceil(products.count / limit)
     const DOTS = '...'
 
@@ -32,13 +30,11 @@ export default function Pagination({ products, currentPage, onPageChange, skip, 
     const handlePrev = () => {
         onPageChange(currentPage - 1)
         dispatch(subtractedSkip())
-        dispatch(fetchProducts({ skip: skip - limit, limit, category, tags }))
     }
     
     const handleNext = () => {
         onPageChange(currentPage + 1 )
         dispatch(addedSkip())
-        dispatch(fetchProducts({ skip: skip + limit, limit, category, tags }))
     }
 
     return (

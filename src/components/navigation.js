@@ -119,7 +119,7 @@ export default function Navbar() {
 
                             <div className="ml-auto flex items-center ">
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                    <a href={token === null? '/login' : '/account'}
+                                    <a href={!token ? '/login' : '/account'}
                                         className="text-lg font-medium text-amber-600 hover:text-amber-700"
                                     >
                                         Account

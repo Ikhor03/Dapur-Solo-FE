@@ -19,14 +19,30 @@ export const CardList = () => {
 
 
     useEffect(() => {
-        if (productStatus === 'pending') {
-            dispatch(fetchProducts({ skip, limit, category, tags }))
-        }
-    }, [productStatus, dispatch, skip, limit, category, tags])
+        dispatch(fetchProducts({ skip, limit, category, tags }))
+    }, [skip, limit, category, tags])
 
     if (productStatus === 'succeeded') {
         return (
             <>
+                <div className="grid grid-cols-3 border-b font-semibold p-4 sticky">
+                    {
+                        category && (
+                            <div className="flex col-span-1 w-1/2">
+                                <p > Kategori:</p>
+                                <p className="px-1 mx-2 ring-1 ring-gray-500 rounded-md">{category}</p>
+                            </div>
+                        )
+                    }
+                    {
+                        tags.length !== 0 && (
+                            <div className="flex col-span-2">
+                                <p > Tags:</p>
+                                {tags.map(tag => (<p className="px-1 mx-1 ring-1 ring-gray-500 rounded-md">{tag}</p>))}
+                            </div>
+                        )
+                    }
+                </div>
                 <div className="mt-6 mb-24 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
                     {
                         allProducts.data.map((product) => {

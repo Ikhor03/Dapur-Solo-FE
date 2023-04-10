@@ -1,9 +1,9 @@
 import { Dialog, Tab, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { close, fetchCategories, fetchTags, selectCategories, selectTagsBar } from '../app/features/filterBar/filterBarSlice'
-import { addedCategory, addedTags, deletedAllTags, deleteTags, fetchProducts, selectTags } from '../app/features/Product/productsSlice'
+import { addedCategory, addedTags, deletedAllTags, deleteTags, selectTags } from '../app/features/Product/productsSlice'
 
 const FilterBar = () => {
     function classNames(...classes) {
@@ -16,7 +16,7 @@ const FilterBar = () => {
     const checkedTags = useSelector(selectTags)
     const dispatch = useDispatch()
 
-    const token = JSON.parse(localStorage.getItem('auth'))
+    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')): ""
 
     useEffect(() => {
         dispatch(fetchCategories())
@@ -31,7 +31,6 @@ const FilterBar = () => {
         let category = e.target.value
         dispatch(close())
         dispatch(addedCategory(category))
-        dispatch(fetchProducts({ skip: 0, limit: 8, category, tags: checkedTags }))
     }
 
     const [toggleTag, setToggleTag] = useState({})
@@ -46,8 +45,6 @@ const FilterBar = () => {
         }
 
     }
-
-    useMemo(() => dispatch(fetchProducts({ skip: 0, limit: 8, category: '', tags: checkedTags })), [checkedTags, dispatch])
 
     const handleClearTag = () => {
         setToggleTag(false)
@@ -160,7 +157,8 @@ const FilterBar = () => {
                                                             <button
                                                                 onClick={filterProducts}
                                                                 value={category.name}
-                                                                className="-m-2 block p-2 text-gray-500">
+                                                                className="-m-2 block p-2 text-gray-500 checked:bg-black"
+                                                                >
                                                                 {category.name}
                                                             </button>
                                                         </li>
@@ -209,7 +207,7 @@ const FilterBar = () => {
                                 </Tab.Panels>
                             </Tab.Group>
 
-                            {token === null ?
+                            {!token ?
                                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                                     <div className="flow-root">
                                         <a href="/login" className="-m-2 block p-2 font-medium text-gray-900">
