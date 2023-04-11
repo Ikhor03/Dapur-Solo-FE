@@ -38,9 +38,6 @@ export default function Checkout() {
                 alert(res.data.message)
             })
             .catch(err => console.error(err.response.data))
-            .finally(() => {
-                
-            })
                         
         }
         

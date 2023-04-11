@@ -1,30 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {  useSelector } from "react-redux";
 import CartItem from "../components/cartItem";
-import axios from "axios";
 
 const Cart = () => {
     const carts = useSelector((state) => state.carts.cart)
-    const [cartItem, setCartitem] = useState([])
-    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ""
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(carts))
-
-        async function getCartItem() {
-            try {
-                await axios.put('http://localhost:3000/api/cart', { items: carts }, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
-
-                let { data } = await axios('http://localhost:3000/api/cart', { headers: { authorization: `Bearer ${token}` } })
-
-                setCartitem(data)
-            } catch (error) {
-                console.log(error.response.data)
-            }
-        }
-        getCartItem()
     }, [carts])
 
     const total = carts.reduce((acc, item) => {
@@ -43,7 +25,7 @@ const Cart = () => {
                 </div>
             ) : (
                 <div className="flex border-t w-3/4 md:w-full max-w-xl h-full flex-col bg-white shadow-xl">
-                        {cartItem.map((item) => (
+                        {carts.map((item) => (
                         <CartItem key={item._id} item={item} />
                     ))}
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6 bg-white">

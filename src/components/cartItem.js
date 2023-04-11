@@ -9,11 +9,12 @@ const CartItem = ({ item }) => {
     const handleQuantityChange = (e) => {
         const quantity = parseInt(e.target.value);
         dispatch(updateQuantity(item._id, quantity));
+        console.log("item dari cartitems: ", item)
     };
 
     const handleRemove = () => {
         alert('cart removed')
-        dispatch(removeFromCart(item.product._id));
+        dispatch(removeFromCart(item._id));
     };
 
 
