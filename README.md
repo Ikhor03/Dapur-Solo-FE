@@ -4,7 +4,7 @@ Project ini adalah clone dari situs resmi [Dapur Solo](https://dapursolo.com/). 
 
 ## Server side
 
-Sebelum menjalankan aplikasi, silahkan clone dan run repositori Back-End yang sebelumnya sudah saya buat untuk sisi servernya [disini](https://github.com/Ikhor03/Store-Back-End.git). jalankan server pada "localhost:3000".
+Sebelum menjalankan aplikasi, silahkan clone dan run repositori Back-End yang sebelumnya sudah saya buat untuk sisi servernya [disini](https://github.com/Ikhor03/Store-Back-End.git). jalankan server di [http://localhost:3000](http://localhost:3000).
 
 ## Available Scripts
 
