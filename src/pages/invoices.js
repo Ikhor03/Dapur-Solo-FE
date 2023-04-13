@@ -1,31 +1,55 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
+import { statusChanged } from "../app/features/invoice"
 
 export default function Invoice() {
-    const [invoice, setInvoice] = useState()
+    const dispatch = useDispatch()
     let { token } = JSON.parse(localStorage.getItem('auth'))
-    let {id} = useParams()
+    let { id } = useParams()
+    const invoiceState = useSelector((state) => state.invoice)
+    const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : {}
+    const thisInvoice = invoiceLS.filter(item => item._id === id)
+    
+    const [flag, setFlag] = useState(false)
+    const handleSuccess = () => {
+        alert('Payment successfully')
+        dispatch(statusChanged({ invoiceLS, id, status: "paid" }))
+        setFlag(true)
+    }
+
+    const handleFailed = () => {
+        alert('Payment failed')
+        dispatch(statusChanged({ invoiceLS, id, status: "failed" }))
+        setFlag(true)
+    }
 
     useEffect(() => {
-        if(id){
+        if ( flag ) {
+            localStorage.setItem('invoice', JSON.stringify(invoiceState))
+        }
+    }, [flag])
+
+    const [dataInvoice, setDataInvoice] = useState()
+    useEffect(() => {
+        if (id) {
             async function getInvoice() {
                 let { data } = await axios(`http://localhost:3000/api/invoice/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-                setInvoice(data)
+                setDataInvoice(data)
             }
-            
+
             getInvoice()
         }
 
-        
     }, [id])
 
     return (
         <>
             {
-                !invoice ?
+                !dataInvoice ?
                     <div className="mt-44 grid">
-                        <h2 className="text-center font-bold">LOADING...</h2> <br/>
+                        <h2 className="text-center font-bold">LOADING...</h2> <br />
                         <a href="/home" className="text-center text-sm font-semibold text-amber-500">&larr; Back to home</a>
                     </div>
                     :
@@ -38,7 +62,7 @@ export default function Invoice() {
                             <dl>
                                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">Status</dt>
-                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{invoice.payment_status}</dd>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{thisInvoice[0].status}</dd>
                                 </div>
                                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">Order ID</dt>
@@ -46,16 +70,16 @@ export default function Invoice() {
                                 </div>
                                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">Total Amount</dt>
-                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">Rp. {invoice.total}</dd>
+                                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">Rp. {dataInvoice.total}</dd>
                                 </div>
                                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                     <dt className="text-sm font-medium text-gray-500">Billed to</dt>
                                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                                        <p className="font-bold">{invoice.user.full_name}</p>
-                                        <p>{invoice.user.email}</p> <br />
+                                        <p className="font-bold">{dataInvoice.user.full_name}</p>
+                                        <p>{dataInvoice.user.email}</p> <br />
                                         <p>{`
-                                            ${invoice.delivery_address.provinsi} ${invoice.delivery_address.kabupaten} ${invoice.delivery_address.kecamatan}
-                                            ${invoice.delivery_address.kelurahan} . ${invoice.delivery_address.detail}
+                                            ${dataInvoice.delivery_address.provinsi} ${dataInvoice.delivery_address.kabupaten} ${dataInvoice.delivery_address.kecamatan}
+                                            ${dataInvoice.delivery_address.kelurahan} . ${dataInvoice.delivery_address.detail}
                                         `}</p>
                                     </dd>
                                 </div>
@@ -70,8 +94,16 @@ export default function Invoice() {
                                 </div>
                             </dl>
                         </div>
-                        <div className="grid my-16">
-                            <a href="/home" className="text-center text-md font-semibold text-amber-500">&larr; Back to home</a>
+                        <div className="grid grid-cols-3 my-16">
+                            <a href="/home" className="col-span-2 ml-16 text-md font-semibold text-amber-500">&larr; Back to home</a>
+                            <div className="flex justify-between">
+                                <button
+                                    onClick={handleSuccess}
+                                    className="bg-green-500/50 w-1/3 mx-auto rounded-lg">Mark as Succees</button>
+                                <button
+                                    onClick={handleFailed}
+                                    className="bg-red-500/60 w-1/3 mx-auto rounded-lg">Mark as failed</button>
+                            </div>
                         </div>
                     </div>
             }

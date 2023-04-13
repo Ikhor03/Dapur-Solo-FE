@@ -6,6 +6,7 @@ export default function OrderList() {
     const navigate = useNavigate()
     const [orders, setOrders] = useState()
     let { token } = JSON.parse(localStorage.getItem('auth'))
+    const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : []
 
     useEffect(() => {
         async function getOrders() {
@@ -15,6 +16,17 @@ export default function OrderList() {
 
         getOrders()
     }, [])
+
+    useEffect(() => {
+        // console.log("orders: " + orders)
+        // console.log( "invoiceLS: " + invoiceLS)
+        // console.log(invoiceLS && invoiceLS.length === 0)
+        if (orders && invoiceLS.length === 0) {
+            localStorage.setItem('invoice', JSON.stringify(orders))
+        } else {
+            localStorage.setItem('invoice', JSON.stringify(invoiceLS))
+        }
+    }, [invoiceLS])
 
     return (
         <>{
@@ -52,24 +64,26 @@ export default function OrderList() {
                                         </th>
                                     </tr>
                                 </thead>
-                                {orders.map((order) => (
+                                {invoiceLS.map((order) => (
                                     <tbody key={order._id}>
                                         <tr>
                                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p className="text-gray-900 whitespace-no-wrap text-ellipsis truncate w-20 active:w-auto">
+                                                <p className="text-center text-gray-900 whitespace-no-wrap text-ellipsis truncate w-20 active:w-auto">
                                                     #{order._id}
                                                 </p>
                                             </td>
                                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                <p className="text-center text-gray-900 whitespace-no-wrap">
                                                     Rp. {order.order_items.reduce((acc, item) => acc + (item.price * item.quantity), 0) + order.delivery_fee}
                                                 </p>
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                                 <span
                                                     className="relative inline-block px-3 py-1 font-semibold text-amber-900 leading-tight">
-                                                    <span aria-hidden
-                                                        className="absolute inset-0 bg-amber-200 opacity-50 rounded-full"></span>
+                                                    <span 
+                                                        aria-hidden 
+                                                        className={`absolute inset-0 opacity-50 rounded-full ${ order.status === 'waiting_payment' ? "bg-yellow-200" : order.status === 'paid'? "bg-green-200": "bg-red-200"} `}
+                                                    ></span>
                                                     <span className="relative">{order.status}</span>
                                                 </span>
                                             </td>
