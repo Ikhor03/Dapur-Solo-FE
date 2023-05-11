@@ -11,7 +11,7 @@
 
   <p align="center">
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Video Demo »</strong></a>
+    <a href="https://youtu.be/V0d6w4pyTxk"><strong>Video Demo »</strong></a>
     <br />
     <a href="https://dapur-solo.vercel.app/">Web Demo (need to run API in your local)</a>
   </p>
