@@ -1,47 +1,68 @@
-# Dapur Solo
+<a name="readme-top"></a>
 
-Project ini adalah clone dari situs resmi [Dapur Solo](https://dapursolo.com/). saya mengerjakan ini untuk memenuhi tugas front-end pada bothcamp [Eduwork](https://eduwork.id/) yang saya ikuti. Dibuat menggunakan [Create React App](https://github.com/facebook/create-react-app).
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/Ikhor03/Dapur-Solo-FE.git">
+    <img src="public/favicon.png" alt="Logo" width="80" height="80">
+  </a>
 
-## Server side
+<h3 align="center">Dapur Solo</h3>
 
-Sebelum menjalankan aplikasi, silahkan clone dan run repositori Back-End yang sebelumnya sudah saya buat untuk sisi servernya [disini](https://github.com/Ikhor03/Store-Back-End.git). jalankan server di [http://localhost:3000](http://localhost:3000).
+  <p align="center">
+    <br />
+    <a href="https://github.com/github_username/repo_name"><strong>Video Demo »</strong></a>
+    <br />
+    <br />
+    <a href="https://dapur-solo.vercel.app/">Web Demo (need to run API in your local)</a>
+  </p>
+</div>
 
-## Available Scripts
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-In the project directory, you can run:
+[![Product Name Screen Shot][product-screenshot]](https://vercel.com/ikhor03/dapur-solo)
 
-### `npm start`
+This project is a clone of the official website [Dapur Solo](https://dapursolo.com/). I worked on this project to fulfill the front-end task for the bothcamp program by [Eduwork](https://eduwork.id/) that I participated in.
 
-Runs the app in the development mode.\
-Open [http://localhost:3001](http://localhost:3001) to view it in your browser.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Built With
 
-### `npm test`
+* [Create React App](https://github.com/facebook/create-react-app)
+* [TailwindCSS](https://tailwindcss.com/)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### `npm run build`
+<!-- GETTING STARTED -->
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can fork this repo
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+When you open the demo website, you may notice that there are no images or just a blank design. It's because, to run this project, you need to run the API data locally on ['localhost:3000'](http://localhost:3000). We apologize for any inconvenience this may cause. To be honest, we have not yet been able to host the API for free to make it publicly accessible. After running the API, you can clearly [open the website](https://dapur-solo.vercel.app).
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Ikhor03/Dapur-Solo-FE.git
+   ```
+2. Install and use the correct version of Node using [NVM](https://github.com/nvm-sh/nvm)
+   ```sh
+   nvm install
+   ```
+3. Start the development server
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```sh
+   npm start
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-
-
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[product-screenshot]: public/ss.png
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
