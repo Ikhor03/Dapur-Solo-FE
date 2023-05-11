@@ -30,6 +30,7 @@ This project is a clone of the official website [Dapur Solo](https://dapursolo.c
 
 * [Create React App](https://github.com/facebook/create-react-app)
 * [TailwindCSS](https://tailwindcss.com/)
+* [Redux Toolkit](https://redux-toolkit.js.org/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
