@@ -10,7 +10,7 @@ export default function OrderList() {
 
     useEffect(() => {
         async function getOrders() {
-            let { data } = await axios(`http://localhost:3000/api/orders`, { headers: { Authorization: `Bearer ${token}` } })
+            let { data } = await axios(`https://dapur-solo.cyclic.app//api/orders`, { headers: { Authorization: `Bearer ${token}` } })
             setOrders(data.data)
         }
 
@@ -18,9 +18,6 @@ export default function OrderList() {
     }, [])
 
     useEffect(() => {
-        // console.log("orders: " + orders)
-        // console.log( "invoiceLS: " + invoiceLS)
-        // console.log(invoiceLS && invoiceLS.length === 0)
         if (orders && invoiceLS.length === 0) {
             localStorage.setItem('invoice', JSON.stringify(orders))
         } else {
@@ -80,9 +77,9 @@ export default function OrderList() {
                                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                                 <span
                                                     className="relative inline-block px-3 py-1 font-semibold text-amber-900 leading-tight">
-                                                    <span 
-                                                        aria-hidden 
-                                                        className={`absolute inset-0 opacity-50 rounded-full ${ order.status === 'waiting_payment' ? "bg-yellow-200" : order.status === 'paid'? "bg-green-200": "bg-red-200"} `}
+                                                    <span
+                                                        aria-hidden
+                                                        className={`absolute inset-0 opacity-50 rounded-full ${order.status === 'waiting_payment' ? "bg-yellow-200" : order.status === 'paid' ? "bg-green-200" : "bg-red-200"} `}
                                                     ></span>
                                                     <span className="relative">{order.status}</span>
                                                 </span>

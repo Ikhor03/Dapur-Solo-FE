@@ -13,11 +13,13 @@ export default function Checkout() {
     const [order_id, setOrder_id] = useState()
     const [delivery_address, setDelivery_address] = useState({})
     const { token } = JSON.parse(localStorage.getItem('auth'))
+    const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : {}
     let delivery_fee = 15000
 
     const subtotal = carts.reduce((acc, item) => {
         return acc + item.price * item.quantity;
     }, 0);
+    
     const total = subtotal + delivery_fee
 
     const getDeliveryAddress = (address) => {
@@ -26,26 +28,25 @@ export default function Checkout() {
 
     const handleChekout = async () => {
 
-        await axios.post(`http://localhost:3000/api/orders`,{
-                delivery_fee,
-                delivery_address
-            },
+        await axios.post(`https://dapur-solo.cyclic.app//api/orders`, {
+            delivery_fee,
+            delivery_address
+        },
             { headers: { authorization: `Bearer ${token}` } })
             .then((res) => {
+                alert(res.data.message)
                 setOrder_id(res.data.data._id)
                 dispatch(setCart([]))
                 localStorage.setItem('cart', JSON.stringify([]))
-                alert(res.data.message)
             })
             .catch(err => console.error(err.response.data))
-                        
+    }
+
+    useEffect(() => {
+        if (order_id) {
+            navigate(`/invoice/${order_id}`)
         }
-        
-        useEffect(() => {
-            if (order_id) {
-                navigate(`/invoice/${order_id}`)
-            }
-        }, [order_id])
+    }, [order_id])
 
     return (
         <div className="bg-gradient-to-tl from-amber-100 to-gray-100">

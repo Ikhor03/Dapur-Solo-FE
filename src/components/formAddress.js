@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 
-export default function FormAddress () {
+export default function FormAddress() {
     const navigate = useNavigate()
     const [provinceList, setProvinceList] = useState([])
     const [regenciesList, setRegenciesList] = useState([])
@@ -67,7 +67,7 @@ export default function FormAddress () {
         const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {}
 
         try {
-            let { data } = await axios.post(`http://localhost:3000/api/addresses`, {
+            let { data } = await axios.post(`https://dapur-solo.cyclic.app//api/addresses`, {
                 nama,
                 detail,
                 provinsi,

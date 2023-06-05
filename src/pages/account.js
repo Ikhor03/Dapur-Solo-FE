@@ -8,7 +8,7 @@ export default function Account() {
 
     const handleLogout = () => {
         async function logout() {
-            let {data} = await axios.post(`http://localhost:3000/auth/logout`, null, {headers:{Authorization: `Bearer ${token}`}})
+            let { data } = await axios.post(`https://dapur-solo.cyclic.app//auth/logout`, null, { headers: { Authorization: `Bearer ${token}` } })
             alert(data.message)
             localStorage.removeItem('auth')
             navigate('/')
@@ -19,7 +19,7 @@ export default function Account() {
     return (
         <div className="w-11/12 mx-auto mt-4">
             <div className="bg-white overflow-hidden shadow-lg">
-                <div className="text-center p-2 bg-hero-image bg-right-bottom border-b mb-10">
+                <div className="text-center p-2 bg-right-bottom border-b mb-10 bg-amber-700">
                     <svg aria-hidden="true" role="img" className="h-24 w-24 text-white rounded-full mx-auto" width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256"><path fill="currentColor" d="M172 120a44 44 0 1 1-44-44a44 44 0 0 1 44 44Zm60 8A104 104 0 1 1 128 24a104.2 104.2 0 0 1 104 104Zm-16 0a88 88 0 1 0-153.8 58.4a81.3 81.3 0 0 1 24.5-23a59.7 59.7 0 0 0 82.6 0a81.3 81.3 0 0 1 24.5 23A87.6 87.6 0 0 0 216 128Z"></path></svg>
                     <p className="pt-2 text-lg font-semibold text-gray-50">{user.full_name}</p>
                     <p className="text-sm text-gray-100">{user.email}</p>

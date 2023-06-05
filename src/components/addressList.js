@@ -10,7 +10,7 @@ export default function AddressList() {
         let id = e.target.value
         async function deleteAddres() {
             try {
-                let { data } = await axios.delete(`http://localhost:3000/api/addresses/${id}`, {
+                let { data } = await axios.delete(`https://dapur-solo.cyclic.app//api/addresses/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 if (data.error) {
@@ -30,7 +30,7 @@ export default function AddressList() {
 
     useEffect(() => {
         async function getAddresses() {
-            let { data } = await axios('http://localhost:3000/api/addresses', {
+            let { data } = await axios('https://dapur-solo.cyclic.app//api/addresses', {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setDataList(data.data)

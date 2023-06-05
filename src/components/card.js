@@ -12,7 +12,7 @@ export default function Card({ product, category, tags }) {
 
     async function saveCart() {
         try {
-            let { data } = await axios.put('http://localhost:3000/api/cart', { items: carts }, {
+            let { data } = await axios.put('https://dapur-solo.cyclic.app//api/cart', { items: carts }, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             alert(data.message)
@@ -20,20 +20,20 @@ export default function Card({ product, category, tags }) {
             console.error(error.response.data)
         }
     }
-    
+
     const handleAddCart = () => {
-        if (token){
+        if (token) {
             dispatch(addToCart(product))
             saveCart()
         } else {
             navigate('/login')
         }
     }
-    
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(carts))
     }, [carts])
-    
+
 
     return (
         <div >
@@ -49,16 +49,7 @@ export default function Card({ product, category, tags }) {
                     <p className="text-sm font-medium text-center text-gray-900">
                         {product.name}
                     </p>
-                    {/* INI UI CATEGORY DAN TAGS */}
-                    {/* <p className="text-sm font-light text-center text-gray-700">
-                        {category}
-                    </p> */}
                     <p className="text-sm font-medium text-center text-gray-900">Rp. {product.price}</p>
-                    {/* {tags.map(tag => (
-                        <span className=" text-sm text-center text-gray-700 mr-3" >
-                            {tag}
-                        </span>
-                    ))} */}
                 </div>
                 <div className="flex justify-center">
                     <button

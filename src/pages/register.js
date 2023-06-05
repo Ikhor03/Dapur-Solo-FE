@@ -13,7 +13,7 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            let { data } = await axios.post('http://localhost:3000/auth/register', {
+            let { data } = await axios.post('https://dapur-solo.cyclic.app//auth/register', {
                 email,
                 password,
                 full_name: fullName
@@ -130,7 +130,7 @@ export default function Register() {
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                                     <LockClosedIcon className="h-5 w-5 text-amber-500 group-hover:text-amber-400" aria-hidden="true" />
                                 </span>
-                                Sign in
+                                Register
                             </button>
                         </div>
                     </form>

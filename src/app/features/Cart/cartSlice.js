@@ -49,15 +49,15 @@ export const productSlice = createSlice({
     }
 })
 
-export const { addedSkip, subtractedSkip, addedCategory, addedTags, deleteTags, deletedAllTags } = productSlice.actions
+// export const { addedSkip, subtractedSkip, addedCategory, addedTags, deleteTags, deletedAllTags } = productSlice.actions
 
-export default productSlice.reducer
+// export default productSlice.reducer
 
-export const selectAllProducts = (state) => state.products.products
-export const selectSkip = (state) => state.products.skip
-export const selectLimit = (state) => state.products.limit
-export const selectCategory = (state) => state.products.category
-export const selectTags = (state) => state.products.tags
+// export const selectAllProducts = (state) => state.products.products
+// export const selectSkip = (state) => state.products.skip
+// export const selectLimit = (state) => state.products.limit
+// export const selectCategory = (state) => state.products.category
+// export const selectTags = (state) => state.products.tags
 
 
 

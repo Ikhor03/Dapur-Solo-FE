@@ -38,7 +38,7 @@ export const CardList = () => {
                         tags.length !== 0 && (
                             <div className="flex col-span-2">
                                 <p > Tags:</p>
-                                {tags.map(tag => (<p className="px-1 mx-1 ring-1 ring-gray-500 rounded-md">{tag}</p>))}
+                                {tags.map((tag, i) => (<p key={i} className="px-1 mx-1 ring-1 ring-gray-500 rounded-md">{tag}</p>))}
                             </div>
                         )
                     }

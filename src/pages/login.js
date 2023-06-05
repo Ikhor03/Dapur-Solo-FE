@@ -16,18 +16,19 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            let {data} = await axios.post('http://localhost:3000/auth/login', {
+            let { data } = await axios.post('https://dapur-solo.cyclic.app//auth/login', {
                 email,
                 password
             }, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             })
-            alert('Login successfully!')
-            if(data.error) {
+            
+            if (data.error) {
                 setErrors(data.response)
-            } else{
-                const {user, token } = data
-                dispatch(login({user, token}))
+            } else {
+                const { user, token } = data
+                alert('Login successfully!')
+                dispatch(login({ user, token }))
                 setErrors([])
                 navigate(-1)
             }
@@ -63,7 +64,7 @@ export default function Login() {
                     <div className='bg-red-200 rounded-lg'>
                         <p className='text-center'>{errors}</p>
                     </div>
-                    <form className="mt-8 space-y-6" onSubmit={ handleSubmit }>
+                    <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                         <input type="hidden" name="remember" defaultValue="true" />
                         <div className="-space-y-px rounded-md shadow-sm">
                             <div>
@@ -117,11 +118,11 @@ export default function Login() {
                                 </a>
                             </div>
                         </div>
-                            <div className="text-sm">
-                                <a href="home" className="font-medium text-amber-600 hover:text-amber-500">
+                        <div className="text-sm">
+                            <a href="home" className="font-medium text-amber-600 hover:text-amber-500">
                                 &larr; Back Home
-                                </a>
-                            </div>
+                            </a>
+                        </div>
 
                         <div>
                             <button

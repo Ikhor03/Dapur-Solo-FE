@@ -10,9 +10,16 @@ export default function Invoice() {
     let { id } = useParams()
     const invoiceState = useSelector((state) => state.invoice)
     const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : {}
-    const thisInvoice = invoiceLS.filter(item => item._id === id)
-    
+    const [dataInvoice, setDataInvoice] = useState([])
+    const thisInvoice = dataInvoice.filter(item => item._id === id)
+
     const [flag, setFlag] = useState(false)
+
+    async function getInvoice() {
+        let { data } = await axios(`https://dapur-solo.cyclic.app//api/invoice/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        setDataInvoice(data)
+    }
+
     const handleSuccess = () => {
         alert('Payment successfully')
         dispatch(statusChanged({ invoiceLS, id, status: "paid" }))
@@ -26,23 +33,12 @@ export default function Invoice() {
     }
 
     useEffect(() => {
-        if ( flag ) {
+        if (flag) {
             localStorage.setItem('invoice', JSON.stringify(invoiceState))
         }
+        getInvoice()
     }, [flag])
 
-    const [dataInvoice, setDataInvoice] = useState()
-    useEffect(() => {
-        if (id) {
-            async function getInvoice() {
-                let { data } = await axios(`http://localhost:3000/api/invoice/${id}`, { headers: { Authorization: `Bearer ${token}` } })
-                setDataInvoice(data)
-            }
-
-            getInvoice()
-        }
-
-    }, [id])
 
     return (
         <>
