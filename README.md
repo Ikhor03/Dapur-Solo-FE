@@ -21,8 +21,9 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://vercel.com/ikhor03/dapur-solo)
+[![Product Name Screen Shot][product-screenshot]](https://dapur-solo.vercel.app/)
 
+A web-based application that allows customers to order Indonesian food, drinks, and snacks anytime and anywhere. On this website, users can register, log in, filter products, and check out their orders. The application is also responsive across all devices.
 This project is a clone of the official website [Dapur Solo](https://dapursolo.com/). I worked on this project to fulfill the front-end task for the bothcamp program by [Eduwork](https://eduwork.id/) that I participated in.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
