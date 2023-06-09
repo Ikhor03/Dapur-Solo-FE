@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { close, fetchCategories, fetchTags, selectCategories, selectTagsBar } from '../app/features/filterBar/filterBarSlice'
 import { addedCategory, addedTags, deletedAllTags, deleteTags, selectTags } from '../app/features/Product/productsSlice'
+import getToken from '../utils/getToken'
 
 const FilterBar = () => {
     function classNames(...classes) {
@@ -16,7 +17,7 @@ const FilterBar = () => {
     const checkedTags = useSelector(selectTags)
     const dispatch = useDispatch()
 
-    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')): ""
+    const token = getToken()
 
     useEffect(() => {
         dispatch(fetchCategories())

@@ -3,16 +3,18 @@ import { addToCart } from "../app/features/Cart/action"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import getToken from "../utils/getToken"
 
 export default function Card({ product, category, tags }) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const carts = useSelector((state) => state.carts.cart)
-    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ""
+    const token = getToken()
+    const endPoint = process.env.REACT_APP_END_POINT
 
     async function saveCart() {
         try {
-            let { data } = await axios.put('https://dapur-solo.cyclic.app//api/cart', { items: carts }, {
+            let { data } = await axios.put(`${endPoint}/api/cart`, { items: carts }, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             alert(data.message)

@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setCart } from "../app/features/Cart/action";
+import getToken from "../utils/getToken";
 
 export default function Checkout() {
     const navigate = useNavigate()
@@ -12,9 +13,10 @@ export default function Checkout() {
     const carts = useSelector((state) => state.carts.cart)
     const [order_id, setOrder_id] = useState()
     const [delivery_address, setDelivery_address] = useState({})
-    const { token } = JSON.parse(localStorage.getItem('auth'))
+    const token = getToken()
     const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : {}
     let delivery_fee = 15000
+    const endPoint = process.env.REACT_APP_END_POINT
 
     const subtotal = carts.reduce((acc, item) => {
         return acc + item.price * item.quantity;
@@ -26,9 +28,9 @@ export default function Checkout() {
         setDelivery_address(address)
     }
 
-    const handleChekout = async () => {
+    const handleConfirm = async () => {
 
-        await axios.post(`https://dapur-solo.cyclic.app//api/orders`, {
+        await axios.post(`${endPoint}/api/orders`, {
             delivery_fee,
             delivery_address
         },
@@ -70,7 +72,7 @@ export default function Checkout() {
                             Sebelumnya
                         </a>
                         <button
-                            onClick={handleChekout}
+                            onClick={handleConfirm}
                             className="rounded-md border border-transparent bg-amber-600 px-4 py-1 text-base font-medium text-white shadow-sm hover:bg-amber-700">
                             Konfirmasi
                         </button>

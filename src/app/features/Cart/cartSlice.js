@@ -1,63 +1,101 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import getToken from "../../../utils/getToken";
 
-const initialState = {
-    products: [],
-    status: 'pending',
-    error: null,
-    skip: 0,
-    limit: 8,
-    category: '',
-    tags: []
-}
+const token = getToken()
+const endPoint = process.env.REACT_APP_END_POINT
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts',
-    async ({ skip, limit, category, tags }) => {
-        let tagsString = tags.join('&tags=')
-        const response = await axios(`https://dapur-solo.cyclic.app//api/products?skip=${skip}&limit=${limit}&category=${category}&tags=${tagsString}`)
+export const fetchCart = createAsyncThunk('cart/fetchCart',
+    async () => {
+        const response = await axios(`${endPoint}/api/cart`,
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
         return response.data
     })
 
-export const productSlice = createSlice({
-    name: 'products',
+export const updateCart = createAsyncThunk('cart/updateCart',
+    async (item) => {
+        const response = await axios.put(`${endPoint}/api/cart`,
+            { items: item },
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
+        console.log(response.data)
+        return response.data
+    })
+
+const initialState = {
+    cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],
+    status: 'pending',
+    error: null
+}
+
+export const cartSlice = createSlice({
+    name: 'cart',
     initialState,
     reducers: {
-        addedSkip: (state) => { state.skip = state.skip + state.limit },
-        subtractedSkip: (state) => { state.skip = state.skip - state.limit },
-        addedCategory: (state, action) => { state.category = action.payload },
-        addedTags: (state, action) => { state.tags = action.payload },
-        deleteTags: (state, action) => {
-            let indexTag = state.tags.indexOf(action.payload)
-            state.tags.splice(indexTag, 1)
+        addToCart: (state, action) => {
+            const item = action.payload;
+            const existingItem = state.cart.find((x) => x._id === item._id);
+            if (existingItem) {
+                return {
+                    ...state,
+                    cart: state.cart.map((x) =>
+                        x._id === existingItem._id ? { ...x, quantity: x.quantity + 1 } : x
+                    ),
+                };
+            } else {
+                return {
+                    ...state,
+                    cart: [...state.cart, { ...item, quantity: 1 }],
+                };
+            }
         },
-        deletedAllTags: (state) => { state.tags = [] }
+        setCart: (state, action) => {
+            return {
+                ...state,
+                cart: action.payload
+            }
+        },
+        removeCart: (state, action) => {
+            return {
+                ...state,
+                cart: state.cart.filter((x) => x._id !== action.payload),
+            }
+        },
+        updateQuantity: (state, action) => {
+            return {
+                ...state,
+                cart: state.cart.map((x) =>
+                    x._id === action.payload.id ? { ...x, quantity: action.payload.quantity } : x
+                ),
+            }
+        }
     },
     extraReducers(builder) {
         builder
-            .addCase(fetchProducts.pending, (state, action) => {
+            .addCase(fetchCart.pending, (state, action) => {
                 state.status = 'loading'
             })
-            .addCase(fetchProducts.fulfilled, (state, action) => {
+            .addCase(fetchCart.fulfilled, (state, action) => {
                 state.status = 'succeeded'
-                state.products = action.payload
+                state.cart = action.payload
                 // console.log(action.payload)
             })
-            .addCase(fetchProducts.rejected, (state, action) => {
+            .addCase(fetchCart.rejected, (state, action) => {
                 state.status = 'failed'
                 state.error = action.error.message
+            })
+            .addCase(updateCart.fulfilled, (state, action) => {
+                state.cart.push(action.payload.data)
             })
     }
 })
 
-// export const { addedSkip, subtractedSkip, addedCategory, addedTags, deleteTags, deletedAllTags } = productSlice.actions
+export const { addToCart, setCart, removeCart, updateQuantity } = cartSlice.actions
 
-// export default productSlice.reducer
+export default cartSlice.reducer
 
-// export const selectAllProducts = (state) => state.products.products
-// export const selectSkip = (state) => state.products.skip
-// export const selectLimit = (state) => state.products.limit
-// export const selectCategory = (state) => state.products.category
-// export const selectTags = (state) => state.products.tags
+export const selectCart = (state) => state.carts.cart
 
 
 

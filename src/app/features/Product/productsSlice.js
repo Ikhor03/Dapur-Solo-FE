@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const endPoint = process.env.REACT_APP_END_POINT
 const initialState = {
     products: [],
     status: 'pending',
@@ -14,7 +15,7 @@ const initialState = {
 export const fetchProducts = createAsyncThunk('products/fetchProducts',
     async ({ skip, limit, category, tags }) => {
         let tagsString = tags.join('&tags=')
-        const response = await axios(`https://dapur-solo.cyclic.app//api/products?skip=${skip}&limit=${limit}&category=${category}&tags=${tagsString}`)
+        const response = await axios(`${endPoint}/api/products?skip=${skip}&limit=${limit}&category=${category}&tags=${tagsString}`)
         return response.data
     })
 

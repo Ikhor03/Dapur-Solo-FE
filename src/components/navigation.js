@@ -4,6 +4,7 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon } from '@heroicons/reac
 import FilterBar from './filterBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { openBar } from '../app/features/filterBar/filterBarSlice'
+import getToken from '../utils/getToken'
 
 export default function Navbar() {
     const dispatch = useDispatch()
@@ -11,7 +12,7 @@ export default function Navbar() {
     const carts = useSelector((state) => state.carts.cart)
     const countCarts = carts.length
 
-    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ""
+    const token = getToken()
 
     function closeSearchBar() {
         setSearch(false)

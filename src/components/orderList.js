@@ -7,10 +7,11 @@ export default function OrderList() {
     const [orders, setOrders] = useState()
     let { token } = JSON.parse(localStorage.getItem('auth'))
     const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : []
+    const endPoint = process.env.REACT_APP_END_POINT
 
     useEffect(() => {
         async function getOrders() {
-            let { data } = await axios(`https://dapur-solo.cyclic.app//api/orders`, { headers: { Authorization: `Bearer ${token}` } })
+            let { data } = await axios(`${endPoint}/api/orders`, { headers: { Authorization: `Bearer ${token}` } })
             setOrders(data.data)
         }
 

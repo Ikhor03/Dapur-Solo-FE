@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const endPoint = process.env.REACT_APP_END_POINT
+
 const initialState = {
     value: false,
     category: [],
@@ -8,13 +10,13 @@ const initialState = {
 }
 
 export const fetchCategories = createAsyncThunk('filterBar/fetchCategories', async () => {
-    const response = await axios('https://dapur-solo.cyclic.app/api/categories')
+    const response = await axios(`${endPoint}/api/categories`)
     return response.data
 
 })
 
 export const fetchTags = createAsyncThunk('filterBar/fetchTags', async () => {
-    const response = await axios('https://dapur-solo.cyclic.app//api/tags')
+    const response = await axios(`${endPoint}/api/tags`)
     return response.data
 })
 

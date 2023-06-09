@@ -12,11 +12,12 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const auth = useSelector(selectAuth)
+    const endPoint = process.env.REACT_APP_END_POINT
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            let { data } = await axios.post('https://dapur-solo.cyclic.app//auth/login', {
+            let { data } = await axios.post(`${endPoint}/auth/login`, {
                 email,
                 password
             }, {

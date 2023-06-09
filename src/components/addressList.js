@@ -1,16 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import getToken from "../utils/getToken";
 
 export default function AddressList() {
     const [dataList, setDataList] = useState([])
+    const endPoint = process.env.REACT_APP_END_POINT
 
-    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ''
+    const token = getToken()
 
     const handleDelete = (e) => {
         let id = e.target.value
         async function deleteAddres() {
             try {
-                let { data } = await axios.delete(`https://dapur-solo.cyclic.app//api/addresses/${id}`, {
+                let { data } = await axios.delete(`${endPoint}/api/addresses/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 if (data.error) {
@@ -30,7 +32,7 @@ export default function AddressList() {
 
     useEffect(() => {
         async function getAddresses() {
-            let { data } = await axios('https://dapur-solo.cyclic.app//api/addresses', {
+            let { data } = await axios(`${endPoint}/api/addresses`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setDataList(data.data)

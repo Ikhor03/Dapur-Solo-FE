@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
     const navigate = useNavigate()
+    const endPoint = process.env.REACT_APP_END_POINT
     const [errors, setErrors] = useState()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -13,7 +14,7 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            let { data } = await axios.post('https://dapur-solo.cyclic.app//auth/register', {
+            let { data } = await axios.post(`${endPoint}/auth/register`, {
                 email,
                 password,
                 full_name: fullName

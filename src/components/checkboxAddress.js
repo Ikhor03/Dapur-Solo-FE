@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/24/solid'
 import axios from 'axios'
+import getToken from '../utils/getToken'
 
 export default function CheckboxAddress({ onChangeAddress }) {
-    const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : ''
-
+    const token = getToken()
+    const endPoint = process.env.REACT_APP_END_POINT
     const [dataList, setDataList] = useState([])
     const [selected, setSelected] = useState('')
 
@@ -17,7 +18,7 @@ export default function CheckboxAddress({ onChangeAddress }) {
 
     useEffect(() => {
         async function getAddresses() {
-            let { data } = await axios('https://dapur-solo.cyclic.app//api/addresses', {
+            let { data } = await axios(`${endPoint}/api/addresses`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setDataList(data.data)

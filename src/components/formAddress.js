@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
+import getToken from "../utils/getToken";
 
 export default function FormAddress() {
     const navigate = useNavigate()
+    const endPoint = process.env.REACT_APP_END_POINT
     const [provinceList, setProvinceList] = useState([])
     const [regenciesList, setRegenciesList] = useState([])
     const [districtsList, setDistricstLis] = useState([])
@@ -64,10 +66,10 @@ export default function FormAddress() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const { token } = localStorage.getItem('auth') ? JSON.parse(localStorage.getItem('auth')) : {}
+        const token = getToken()
 
         try {
-            let { data } = await axios.post(`https://dapur-solo.cyclic.app//api/addresses`, {
+            let { data } = await axios.post(`${endPoint}/api/addresses`, {
                 nama,
                 detail,
                 provinsi,

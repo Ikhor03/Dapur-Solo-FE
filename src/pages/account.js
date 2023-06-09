@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 export default function Account() {
     const { user, token } = JSON.parse(localStorage.getItem('auth'))
     const navigate = useNavigate()
+    const endPoint = process.env.REACT_APP_END_POINT
 
     const handleLogout = () => {
         async function logout() {
-            let { data } = await axios.post(`https://dapur-solo.cyclic.app//auth/logout`, null, { headers: { Authorization: `Bearer ${token}` } })
+            let { data } = await axios.post(`${endPoint}/auth/logout`, null, { headers: { Authorization: `Bearer ${token}` } })
             alert(data.message)
             localStorage.removeItem('auth')
             navigate('/')

@@ -12,11 +12,11 @@ export default function Invoice() {
     const invoiceLS = localStorage.getItem('invoice') ? JSON.parse(localStorage.getItem('invoice')) : {}
     const [dataInvoice, setDataInvoice] = useState([])
     const thisInvoice = dataInvoice.filter(item => item._id === id)
-
+    const endPoint = process.env.REACT_APP_END_POINT
     const [flag, setFlag] = useState(false)
 
     async function getInvoice() {
-        let { data } = await axios(`https://dapur-solo.cyclic.app//api/invoice/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        let { data } = await axios(`${endPoint}/api/invoice/${id}`, { headers: { Authorization: `Bearer ${token}` } })
         setDataInvoice(data)
     }
 
