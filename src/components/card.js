@@ -47,7 +47,7 @@ export default function Card({ product, category, tags }) {
                         className="h-auto w-full object-cover object-center lg:h-auto lg:w-full"
                     />
                 </div>
-                <div className="mt-0 " >
+                <div className="mt-0 lg:mt-5" >
                     <p className="text-sm font-medium text-center text-gray-900">
                         {product.name}
                     </p>
@@ -55,7 +55,7 @@ export default function Card({ product, category, tags }) {
                 </div>
                 <div className="flex justify-center">
                     <button
-                        className=" mt-5 px-2 py-1 cursor-pointer border border-amber-700 bg-amber-500 hover:bg-amber-600 rounded-full "
+                        className="text-sm sm:text-base mt-5 px-2 py-1 cursor-pointer border border-amber-700 bg-amber-500 hover:bg-amber-600 rounded-full "
                         onClick={handleAddCart}>
                         Add to cart
                     </button>
